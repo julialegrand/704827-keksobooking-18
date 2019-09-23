@@ -37,7 +37,7 @@ var pinHeight = document.querySelector('.map__pin').offsetHeight;
 
 for (var i = 1; i < 9; i++) {
   var avatar = 'img/avatars/user0' + i + '.png';
-  var locationX = Math.floor(Math.random() * mapWidth) + (pinWidth / 2);
+  var locationX = Math.floor(Math.random() * mapWidth) + pinWidth / 2;
   var locationY = Math.floor(Math.random() * (630 - 130 + 1) + 130) + pinHeight;
   var titleRan = Math.floor(Math.random() * titleArray.length);
   var priceRan = Math.floor(Math.random() * 1000) + 400;
@@ -46,9 +46,15 @@ for (var i = 1; i < 9; i++) {
   var guestsRan = Math.floor(Math.random() * 4) + 1;
   var checkinRan = Math.floor(Math.random() * checkinArray.length);
   var checkoutRan = Math.floor(Math.random() * checkoutArray.length);
-  var featuresRan = featuresArray.slice(0,(Math.floor(Math.random() * featuresArray.length)));
+  var featuresRan = featuresArray.slice(
+      0,
+      Math.floor(Math.random() * featuresArray.length)
+  );
   var descriptionRan = Math.floor(Math.random() * descriptionArray.length);
-  var photoRan = photosArray.slice(0,(Math.floor(Math.random() * photosArray.length)));
+  var photoRan = photosArray.slice(
+      0,
+      Math.floor(Math.random() * photosArray.length)
+  );
 
   var objectRent = {
     author: {
@@ -75,7 +81,6 @@ for (var i = 1; i < 9; i++) {
 
   ads.push(objectRent);
 }
-console.log(ads);
 map.classList.remove('.map--faded');
 
 var newElement = document.querySelector('.map__pins');
@@ -99,50 +104,88 @@ for (i = 0; i < ads.length; i++) {
 }
 newElement.appendChild(fragment);
 
-var shablonCart = document.querySelector('#cart').content.querySelector('.map__card popup');
+var shablonCard = document
+  .querySelector('#card')
+  .content.querySelector('.map__card');
 var newCart = map.querySelector('.map__filters-container');
 
-
-
-var newSahibinden = function(param) {
-  var element = shablonCart.cloneNode(true);
+var newSahibinden = function (param) {
+  var element = shablonCard.cloneNode(true);
   element.querySelector('.popup__title').textContent = param.offer.title;
-  element.querySelector('.popup__text--address').textContent = param.offer.address;
-  element.querySelector('.popup__text--price').textContent = param.offer.price + '₽/ночь';
+  element.querySelector('.popup__text--address').textContent =
+    param.offer.address;
+  element.querySelector('.popup__text--price').textContent =
+    param.offer.price + '₽/ночь';
   var typeApart = '';
   if (param.offer.type === 'palace') {
-    typeApart ='Дворец'};
+    typeApart = 'Дворец';
+  }
   if (param.offer.type === 'flat') {
-    typeApart = 'Квартира'};
+    typeApart = 'Квартира';
+  }
   if (param.offer.type === 'house') {
-    typeApart = 'Дом'};
+    typeApart = 'Дом';
+  }
   if (param.offer.type === 'bungalo') {
-    typeApart = 'Бунгало'};
-element.querySelector('.popup__type ').textContent = typeApart;
-element.querySelector('.popup__text--capacity').textContent = param.offer.rooms + 'комнаты для' + param.offer.guests + 'гостей.'
-element.querySelector('.popup__text--time').textContent = 'Заезд после' + param.offer.checking + ',' + '' +  'выезд до' + param.offer.checkout +'.';
-element.querySelector('.popup__features').
-element.querySelector('.popup__description').textContent = param.offer.description;
+    typeApart = 'Бунгало';
+  }
+  element.querySelector('.popup__type ').textContent = typeApart;
+  element.querySelector('.popup__text--capacity').textContent =
+    param.offer.rooms + 'комнаты для' + param.offer.guests + 'гостей.';
+  element.querySelector('.popup__text--time').textContent =
+    'Заезд после' +
+    param.offer.checking +
+    ',' +
+    '' +
+    'выезд до' +
+    param.offer.checkout +
+    '.';
 
-for (var j = 0; j < photosArray; j ++ ){
-  element.querySelector('.popup__photos').src = photoArray[j];
+  var blockUl = element.querySelector('.popup__features');
+
+  var uLchildren = blockUl.children;
+  var ulClone = uLchildren[0];
+  for (i = 0; i < uLchildren.length; i++) {
+    blockUl.removeChild(uLchildren[i]);
+  }
+
+  ulClone.classList.remove('popup__feature--wifi');
+
+  var features = param.offer.features;
+  for (var j = 0; j < features.length; j++) {
+    var foundClass = 'popup__feature--' + features[j];
+    var newLi = ulClone.cloneNode(true);
+    newLi.classList.add(foundClass);
+    blockUl.appendChild(newLi);
+
+  }
+
+  element.querySelector('.popup__description').textContent =
+    param.offer.description;
+
+  var photos = param.offer.photos;
+  if (photos.length === 0) {
+    element.querySelector('.popup__photos').removeChild(element.querySelector('.popup__photo'));
+  }
+  for (j = 0; j < photos.length; j++) {
+    if (j === 0) {
+      element.querySelector('.popup__photo').src = photos[j];
+    } else {
+      var clonedImg = element.querySelector('.popup__photo').cloneNode(true);
+      clonedImg.src = photos[j];
+      element.querySelector('.popup__photos').appendChild(clonedImg);
+    }
+
+  }
+  element.querySelector('.popup__avatar').src = param.author.avatar;
+
+  return element;
+};
+
+var newFragment = document.createDocumentFragment();
+
+for (var k = 0; k < ads.length; k++) {
+  newFragment.appendChild(newSahibinden(ads[k]));
 }
-element.querySelector('popup__avatar').src = param.author.avatar
 
-
-return element;
-}
-
-// var newFragment = document.createDocumentFragment() {
-
-//   for (var i = 0; i < ads.length; i ++) {
-
-//     newFragment.appendChild( newSahibinden(ads[i]));
-// };
-
-
-
-
-
-
-newCart.insertAdjacentHTML('afterend', newFragment);
+map.insertBefore(newFragment, newCart);
