@@ -28,59 +28,75 @@ var photosArray = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
-var ads = [];
+
 
 var map = document.querySelector('.map');
 var mapWidth = map.offsetWidth;
 var pinWidth = document.querySelector('.map__pin').offsetWidth;
 var pinHeight = document.querySelector('.map__pin').offsetHeight;
 
-for (var i = 1; i < 9; i++) {
-  var avatar = 'img/avatars/user0' + i + '.png';
-  var locationX = Math.floor(Math.random() * mapWidth) + pinWidth / 2;
-  var locationY = Math.floor(Math.random() * (630 - 130 + 1) + 130) + pinHeight;
-  var titleRan = Math.floor(Math.random() * titleArray.length);
-  var priceRan = Math.floor(Math.random() * 1000) + 400;
-  var typeRan = Math.floor(Math.random() * typeArray.length);
-  var roomsRan = Math.floor(Math.random() * 4) + 1;
-  var guestsRan = Math.floor(Math.random() * 4) + 1;
-  var checkinRan = Math.floor(Math.random() * checkinArray.length);
-  var checkoutRan = Math.floor(Math.random() * checkoutArray.length);
-  var featuresRan = featuresArray.slice(
-      0,
-      Math.floor(Math.random() * featuresArray.length)
-  );
-  var descriptionRan = Math.floor(Math.random() * descriptionArray.length);
-  var photoRan = photosArray.slice(
-      0,
-      Math.floor(Math.random() * photosArray.length)
-  );
 
-  var objectRent = {
-    author: {
-      avatar: avatar
-    },
-    offer: {
-      title: titleArray[titleRan],
-      address: locationX + ',' + locationY,
-      price: priceRan,
-      type: typeArray[typeRan],
-      rooms: roomsRan,
-      guests: guestsRan,
-      checkin: checkinArray[checkinRan],
-      checkout: checkoutArray[checkoutRan],
-      features: featuresRan,
-      description: descriptionArray[descriptionRan],
-      photos: photoRan
-    },
-    location: {
-      x: locationX,
-      y: locationY
-    }
-  };
+function generateRent() {
 
-  ads.push(objectRent);
+  var arrayLent = [];
+
+  for (var i = 1; i < 9; i++) {
+    var avatar = 'img/avatars/user0' + i + '.png';
+    var locationX = Math.floor(Math.random() * mapWidth) + pinWidth / 2;
+    var locationY = Math.floor(Math.random() * (630 - 130 + 1) + 130) + pinHeight;
+    var titleRan = Math.floor(Math.random() * titleArray.length);
+    var priceRan = Math.floor(Math.random() * 1000) + 400;
+    var typeRan = Math.floor(Math.random() * typeArray.length);
+    var roomsRan = Math.floor(Math.random() * 4) + 1;
+    var guestsRan = Math.floor(Math.random() * 4) + 1;
+    var checkinRan = Math.floor(Math.random() * checkinArray.length);
+    var checkoutRan = Math.floor(Math.random() * checkoutArray.length);
+    var featuresRan = [];
+
+    featuresArray.forEach(function (feature) {
+      if (Math.floor(Math.random() * (1 - 0 + 1) + 0)) {
+        featuresRan.push(feature);
+      }
+    });
+
+
+    var descriptionRan = Math.floor(Math.random() * descriptionArray.length);
+    var photoRan = photosArray.slice(
+        0,
+        Math.floor(Math.random() * photosArray.length)
+    );
+
+    var objectRent = {
+      author: {
+        avatar: avatar
+      },
+      offer: {
+        title: titleArray[titleRan],
+        address: locationX + ',' + locationY,
+        price: priceRan,
+        type: typeArray[typeRan],
+        rooms: roomsRan,
+        guests: guestsRan,
+        checkin: checkinArray[checkinRan],
+        checkout: checkoutArray[checkoutRan],
+        features: featuresRan,
+        description: descriptionArray[descriptionRan],
+        photos: photoRan
+      },
+      location: {
+        x: locationX,
+        y: locationY
+      }
+    };
+
+    arrayLent.push(objectRent);
+  }
+  return arrayLent;
 }
+
+var ads = generateRent();
+
+
 map.classList.remove('.map--faded');
 
 var newElement = document.querySelector('.map__pins');
@@ -99,7 +115,7 @@ var sahibinden = function (param) {
 };
 
 var fragment = document.createDocumentFragment();
-for (i = 0; i < ads.length; i++) {
+for (var i = 0; i < ads.length; i++) {
   fragment.appendChild(sahibinden(ads[i]));
 }
 newElement.appendChild(fragment);
