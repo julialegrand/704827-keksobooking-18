@@ -30,6 +30,14 @@ var photosArray = [
 ];
 
 
+function random(min, max) {
+  if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var map = document.querySelector('.map');
 var mapWidth = map.offsetWidth;
 var pinWidth = document.querySelector('.map__pin').offsetWidth;
@@ -42,15 +50,15 @@ function generateRent() {
 
   for (var i = 1; i < 9; i++) {
     var avatar = 'img/avatars/user0' + i + '.png';
-    var locationX = Math.floor(Math.random() * mapWidth) + pinWidth / 2;
-    var locationY = Math.floor(Math.random() * (630 - 130 + 1) + 130) + pinHeight;
-    var titleRan = Math.floor(Math.random() * titleArray.length);
-    var priceRan = Math.floor(Math.random() * 1000) + 400;
-    var typeRan = Math.floor(Math.random() * typeArray.length);
-    var roomsRan = Math.floor(Math.random() * 4) + 1;
-    var guestsRan = Math.floor(Math.random() * 4) + 1;
-    var checkinRan = Math.floor(Math.random() * checkinArray.length);
-    var checkoutRan = Math.floor(Math.random() * checkoutArray.length);
+    var locationX = random(50, mapWidth) + pinWidth / 2;
+    var locationY = random(130, 630) + pinHeight;
+    var titleRan = random(titleArray.length - 1);
+    var priceRan = random(400, 600);
+    var typeRan = random(typeArray.length - 1);
+    var roomsRan = random(1, 4);
+    var guestsRan = roomsRan * random(1, 2);
+    var checkinRan = random(checkinArray.length - 1);
+    var checkoutRan = random(checkoutArray.length - 1);
     var featuresRan = [];
 
     featuresArray.forEach(function (feature) {
@@ -60,11 +68,10 @@ function generateRent() {
     });
 
 
-    var descriptionRan = Math.floor(Math.random() * descriptionArray.length);
+    var descriptionRan = random(descriptionArray.length - 1);
     var photoRan = photosArray.slice(
         0,
-        Math.floor(Math.random() * photosArray.length)
-    );
+        random(photosArray.length - 1));
 
     var objectRent = {
       author: {
@@ -150,7 +157,7 @@ var newSahibinden = function (param) {
     param.offer.rooms + 'комнаты для' + param.offer.guests + 'гостей.';
   element.querySelector('.popup__text--time').textContent =
     'Заезд после' +
-    param.offer.checking +
+    param.offer.checkin +
     ',' +
     '' +
     'выезд до' +
