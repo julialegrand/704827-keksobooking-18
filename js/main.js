@@ -97,6 +97,7 @@ function generateRent() {
 
 var ads = generateRent();
 
+// eslint-disable-next-line
 function generatePins() {
   var newElement = document.querySelector('.map__pins');
   var shablonTemplate = document
@@ -120,6 +121,7 @@ function generatePins() {
   newElement.appendChild(fragment);
 }
 
+// eslint-disable-next-line
 function generateCards() {
   var shablonCard = document
     .querySelector('#card')
