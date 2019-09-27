@@ -37,7 +37,11 @@
 
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
-        <form action="#" class="map__filters" autocomplete="off">
+        <form class="map__filters"
+          method="post"
+          action= "https://js.dump.academy/keksobooking"
+          enctype="multipart/form-data"
+          autocomplete="off">
           <select name="housing-type" id="housing-type" class="map__filter">
             <option value="any" selected>Любой тип жилья</option>
             <option value="palace">Дворец</option>
@@ -135,18 +139,18 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Кол-во комнат</label>
           <select id="room_number" name="rooms">
-            <option value="1" selected>1 комната</option>
+            <option value="1">1 комната</option>
             <option value="2">2 комнаты</option>
             <option value="3">3 комнаты</option>
-            <option value="100">100 комнат</option>
+            <option value="0">100 комнат</option>
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
-            <option value="2">для 2 гостей</option>
             <option value="1">для 1 гостя</option>
+            <option value="2">для 2 гостей</option>
+            <option value="3">для 3 гостей</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>

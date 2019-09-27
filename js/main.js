@@ -58,6 +58,7 @@ function generateRent() {
     var checkoutRan = random(checkoutArray.length - 1);
     var featuresRan = [];
 
+
     featuresArray.forEach(function (feature) {
       if (Math.floor(Math.random() * (1 - 0 + 1) + 0)) {
         featuresRan.push(feature);
@@ -68,6 +69,7 @@ function generateRent() {
     var photoRan = photosArray.slice(0, random(photosArray.length - 1));
 
     var objectRent = {
+      id: i,
       author: {
         avatar: avatar
       },
@@ -197,6 +199,8 @@ function generateCards() {
       }
     }
     element.querySelector('.popup__avatar').src = param.author.avatar;
+    // element.style.display = 'none';
+    // element.id = 'card_' + param.id;
 
     return element;
   };
@@ -237,32 +241,31 @@ function getMapPinMainActiveXY() {
   return x + ',' + y;
 }
 
-var adForm = document.querySelector('.ad-form ');
-
+var adForm = document.querySelector('.ad-form');
 var adFormInput = adForm.querySelectorAll('input');
 var adFormSelect = adForm.querySelectorAll('select');
 var addressInput = adForm.querySelector('#address');
 var roomNumberSelect = adForm.querySelector('#room_number');
 var capacitySelect = adForm.querySelector('#capacity');
 
-capacitySelect.addEventListener('change', function () {
-  var roomNumberValue = roomNumberSelect.value;
-  if (capacitySelect.value > roomNumberValue) {
-    capacitySelect.setCustomValidity('gostey doljno byt menshe');
+
+function onFormInput() {
+
+  var roomNumber = roomNumberSelect.value;
+  var bedNumber = capacitySelect.value;
+  if (roomNumber === '0') {
+    capacitySelect.setCustomValidity('Не для гостей');
+  } else if (bedNumber > roomNumber) {
+    capacitySelect.setCustomValidity('Колличество комнат должно быть больше');
   } else {
     capacitySelect.setCustomValidity('');
   }
-});
+}
 
-roomNumberSelect.addEventListener('change', function () {
-  var capacityValue = capacitySelect.value;
 
-  if (roomNumberSelect.value < capacityValue) {
-    roomNumberSelect.setCustomValidity('gostey doljno byt menshe');
-  } else {
-    roomNumberSelect.setCustomValidity('');
-  }
-});
+capacitySelect.addEventListener('change', onFormInput);
+roomNumberSelect.addEventListener('change', onFormInput);
+
 
 function setPagePassive() {
   map.classList.add('map--faded');
@@ -288,7 +291,8 @@ function setPageActive() {
   for (var m = 0; m < adFormSelect.length; m++) {
     adFormSelect[m].disabled = false;
   }
-
+  // generatePins();
+  // generateCards();
 }
 
 setPagePassive();
@@ -314,3 +318,9 @@ mapPinMain.addEventListener('keydown', function (evt) {
     setPageActive();
   }
 });
+
+
+// var newElement = document.querySelector('.map__pins');
+// newElement.addEventListener('click', function () {
+
+// });
