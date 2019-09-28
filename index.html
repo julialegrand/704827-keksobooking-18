@@ -23,7 +23,7 @@
         <div class="map__overlay">
           <h2 class="map__title">И снова Токио!</h2>
         </div>
-        <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
+        <button class="map__pin map__pin--main" style="left: 570px; top: 375px;" tabindex="0">
           <img src="img/muffin-red.svg" width="40" height="44" draggable="false" alt="Метка объявления">
           <svg viewBox="0 0 70 70" width="156" height="156" aria-label="Метка для поиска жилья">
             <defs>
@@ -37,7 +37,11 @@
 
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
-        <form action="#" class="map__filters" autocomplete="off">
+        <form class="map__filters"
+          method="post"
+          action= "https://js.dump.academy/keksobooking"
+          enctype="multipart/form-data"
+          autocomplete="off">
           <select name="housing-type" id="housing-type" class="map__filter">
             <option value="any" selected>Любой тип жилья</option>
             <option value="palace">Дворец</option>
@@ -85,7 +89,7 @@
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
       <form class="ad-form ad-form--disabled" method="post" enctype="multipart/form-data" autocomplete="off">
-        <fieldset class="ad-form-header">
+        <fieldset class="ad-form-header" >
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
             <div class="ad-form-header__preview">
@@ -135,18 +139,18 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Кол-во комнат</label>
           <select id="room_number" name="rooms">
-            <option value="1" selected>1 комната</option>
+            <option value="1">1 комната</option>
             <option value="2">2 комнаты</option>
             <option value="3">3 комнаты</option>
-            <option value="100">100 комнат</option>
+            <option value="0">100 комнат</option>
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
-            <option value="2">для 2 гостей</option>
             <option value="1">для 1 гостя</option>
+            <option value="2">для 2 гостей</option>
+            <option value="3">для 3 гостей</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
