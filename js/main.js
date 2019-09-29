@@ -347,13 +347,13 @@ function selectType() {
   var timeOutValue = timeOut.value;
   var timeInValue = timeIn.value;
 
-  if (typeValue == 'bungalo' && priceValue < 0) {
+  if (typeValue === 'bungalo' && priceValue < 0) {
     priceNight.setCustomValidity('Цена должна быть выше');
-  } else if (typeValue == 'flat' && priceValue < 1000) {
+  } else if (typeValue === 'flat' && priceValue < 1000) {
     priceNight.setCustomValidity('Цена должна быть выше');
-  } else if (typeValue == 'house' && priceValue < 5000) {
+  } else if (typeValue === 'house' && priceValue < 5000) {
     priceNight.setCustomValidity('Цена должна быть выше');
-  } else if (typeValue == 'palace' && priceValue < 10000) {
+  } else if (typeValue === 'palace' && priceValue < 10000) {
     priceNight.setCustomValidity('Цена должна быть выше');
   } else {
     priceNight.setCustomValidity('');
