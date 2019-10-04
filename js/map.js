@@ -2,7 +2,7 @@
 
 
 (function () {
-
+  var isPageActive = false;
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinMainWidth = mapPinMain.offsetWidth;
@@ -26,17 +26,17 @@
   };
 
 
-  function getMapPinMainPassivXY() {
+  window.getMapPinMainPassivXY = function () {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
     var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight / 2);
     return x + ',' + y;
-  }
+  };
 
-  function getMapPinMainActiveXY() {
+  window.getMapPinMainActiveXY = function () {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
     var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight);
     return x + ',' + y;
-  }
+  };
 
   // Вернуть страницу в исходное состояние.
   // Блок с картой .map содержит класс map--faded;
@@ -45,7 +45,7 @@
   // с меткой (mousedown) переводит страницу в активное состояние.
 
 
-  function setPagePassive() {
+  window.setPagePassive = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     for (var v = 0; v < adFormInput.length; v++) {
@@ -55,10 +55,13 @@
     for (var m = 0; m < adFormSelect.length; m++) {
       adFormSelect[m].disabled = true;
     }
-    addressInput.value = getMapPinMainPassivXY();
-  }
+    addressInput.value = window.getMapPinMainPassivXY();
+  };
 
-  function setPageActive() {
+  window.setPageActive = function () {
+    if (isPageActive) {
+      return;
+    }
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     for (var v = 0; v < adFormInput.length; v++) {
@@ -69,17 +72,18 @@
       adFormSelect[m].disabled = false;
     }
     window.generatePins();
-  }
+    isPageActive = true;
+  };
 
-  setPagePassive();
+  window.setPagePassive();
 
   // Добавьте обработчик события mousedown на элемент .map__pin--main
   // Обработчик события mousedown должен вызывать функцию, которая будет отменять изменения DOM-элементов,
   // описанные в пункте «Неактивное состояние» технического задания.
 
   mapPinMain.addEventListener('mousedown', function () {
-    setPageActive();
-    addressInput.value = getMapPinMainActiveXY();
+    window.setPageActive();
+    addressInput.value = window.getMapPinMainActiveXY();
   });
 
   // Установить обработчик keydown для метки.
@@ -88,7 +92,7 @@
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.ENTER_KEYCODE) {
-      setPageActive();
+      window.setPageActive();
     }
   });
 
