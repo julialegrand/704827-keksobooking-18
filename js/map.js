@@ -71,7 +71,9 @@
     for (var m = 0; m < adFormSelect.length; m++) {
       adFormSelect[m].disabled = false;
     }
-    window.generatePins();
+
+    window.renderPins(window.fakeData);
+
     isPageActive = true;
   };
 

@@ -86,6 +86,5 @@
     newFragment.appendChild(element);
     map.insertBefore(newFragment, newCart);
   };
-
 })();
 

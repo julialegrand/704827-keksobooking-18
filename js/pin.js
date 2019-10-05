@@ -2,8 +2,7 @@
 
 
 (function () {
-  window.generatePins = function () {
-    var ads = window.generateAds();
+  window.renderPins = function (ads) {
     var newElement = document.querySelector('.map__pins');
     var shablonTemplate = document
       .querySelector('#pin')
