@@ -66,7 +66,7 @@
   formSubmitButton.addEventListener('click', function () {
     selectType();
   });
-  adFormReset.addEventListener('click', function (){
+  adFormReset.addEventListener('click', function () {
     window.setPagePassive();
-  })
+  });
 })();
