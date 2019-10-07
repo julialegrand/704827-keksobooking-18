@@ -18,6 +18,7 @@
   var adForm = document.querySelector('.ad-form');
   var roomNumberSelect = adForm.querySelector('#room_number');
   var capacitySelect = adForm.querySelector('#capacity');
+  var adFormReset = adForm.querySelector('.ad-form__reset');
 
   function onFormInput() {
     var roomNumber = roomNumberSelect.value;
@@ -65,4 +66,7 @@
   formSubmitButton.addEventListener('click', function () {
     selectType();
   });
+  adFormReset.addEventListener('click', function (){
+    window.setPagePassive();
+  })
 })();
