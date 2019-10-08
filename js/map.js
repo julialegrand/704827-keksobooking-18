@@ -81,7 +81,7 @@
       adFormSelect[m].disabled = false;
     }
 
-    window.renderPins(window.fakeData);
+    window.load(window.renderPins, window.errorHandler);
 
     isPageActive = true;
   };
