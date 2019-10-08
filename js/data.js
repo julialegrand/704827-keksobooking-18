@@ -47,7 +47,7 @@
   }
 
 
-  window.generateAds = function () {
+  window.fakeData = (function () {
     var arrayLent = [];
     for (var i = 1; i < 9; i++) {
       var avatar = 'img/avatars/user0' + i + '.png';
@@ -98,6 +98,6 @@
       arrayLent.push(objectRent);
     }
     return arrayLent;
-  };
+  })();
 
 })();

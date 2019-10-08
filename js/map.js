@@ -2,15 +2,17 @@
 
 
 (function () {
-
+  var isPageActive = false;
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var mapPinMainStyle = mapPinMain.getAttribute('style');
   var mapPinMainWidth = mapPinMain.offsetWidth;
   var mapPinMainHeight = mapPinMain.offsetHeight;
   var adForm = document.querySelector('.ad-form');
   var adFormInput = adForm.querySelectorAll('input');
   var adFormSelect = adForm.querySelectorAll('select');
   var addressInput = adForm.querySelector('#address');
+  var mapPinsParent = document.querySelector('.map__pins');
 
   window.closeCard = function () {
     var activeCard = document.querySelector('.map__card');
@@ -26,17 +28,17 @@
   };
 
 
-  function getMapPinMainPassivXY() {
+  window.getMapPinMainPassivXY = function () {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
     var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight / 2);
     return x + ',' + y;
-  }
+  };
 
-  function getMapPinMainActiveXY() {
+  window.getMapPinMainActiveXY = function () {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
     var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight);
     return x + ',' + y;
-  }
+  };
 
   // Вернуть страницу в исходное состояние.
   // Блок с картой .map содержит класс map--faded;
@@ -45,7 +47,7 @@
   // с меткой (mousedown) переводит страницу в активное состояние.
 
 
-  function setPagePassive() {
+  window.setPagePassive = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     for (var v = 0; v < adFormInput.length; v++) {
@@ -55,10 +57,20 @@
     for (var m = 0; m < adFormSelect.length; m++) {
       adFormSelect[m].disabled = true;
     }
-    addressInput.value = getMapPinMainPassivXY();
-  }
+    addressInput.value = window.getMapPinMainPassivXY();
+    var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < mapPins.length; i++) {
+      mapPinsParent.removeChild(mapPins[i]);
+    }
+    window.closeCard();
+    mapPinMain.style = mapPinMainStyle;
+    isPageActive = false;
+  };
 
-  function setPageActive() {
+  window.setPageActive = function () {
+    if (isPageActive) {
+      return;
+    }
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     for (var v = 0; v < adFormInput.length; v++) {
@@ -68,18 +80,21 @@
     for (var m = 0; m < adFormSelect.length; m++) {
       adFormSelect[m].disabled = false;
     }
-    window.generatePins();
-  }
 
-  setPagePassive();
+    window.renderPins(window.fakeData);
+
+    isPageActive = true;
+  };
+
+  window.setPagePassive();
 
   // Добавьте обработчик события mousedown на элемент .map__pin--main
   // Обработчик события mousedown должен вызывать функцию, которая будет отменять изменения DOM-элементов,
   // описанные в пункте «Неактивное состояние» технического задания.
 
   mapPinMain.addEventListener('mousedown', function () {
-    setPageActive();
-    addressInput.value = getMapPinMainActiveXY();
+    window.setPageActive();
+    addressInput.value = window.getMapPinMainActiveXY();
   });
 
   // Установить обработчик keydown для метки.
@@ -88,7 +103,7 @@
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.ENTER_KEYCODE) {
-      setPageActive();
+      window.setPageActive();
     }
   });
 
