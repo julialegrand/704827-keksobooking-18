@@ -1,34 +1,38 @@
 'use strict';
 
-window.load = function (onLoad, onError) {
-  var URL = 'https://js.dump.academy/keksobooking/data';
-  var xhr = new XMLHttpRequest();
-  xhr.responseType = 'json';
-  xhr.addEventListener('load', function () {
-    if (xhr.status === 200) {
-      onLoad(xhr.response);
-    } else {
-      onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-    }
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+(function () {
+  var TIME_OUT = 10000;
+  var CASE_200 = 200;
+  window.load = function (url, method, onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.addEventListener('load', function () {
+      if (xhr.status === CASE_200) {
+        onLoad(xhr.response);
+      } else {
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      }
+      xhr.addEventListener('error', function () {
+        onError('Произошла ошибка соединения');
+      });
+      xhr.addEventListener('timeout', function () {
+        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      });
+      xhr.timeout = TIME_OUT;
     });
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-    });
-    xhr.timeout = 10000; // 10s
-  });
 
-  xhr.open('GET', URL);
-  xhr.send();
-};
+    xhr.open(method, url);
+    xhr.send();
+  };
 
-window.errorHandler = function (errorMessage) {
-  var main = document.querySelector('main');
-  var shablonTemplate = document
-    .querySelector('#error')
-    .content.querySelector('.error');
-  var element = shablonTemplate.cloneNode(true);
-  element.querySelector('.error__message').textContent = errorMessage;
-  main.appendChild(element);
-};
+  window.errorHandler = function (errorMessage) {
+    var main = document.querySelector('main');
+    var shablonTemplate = document
+      .querySelector('#error')
+      .content.querySelector('.error');
+    var element = shablonTemplate.cloneNode(true);
+    element.querySelector('.error__message').textContent = errorMessage;
+    main.appendChild(element);
+  };
+
+})();

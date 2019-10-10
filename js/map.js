@@ -81,7 +81,7 @@
       adFormSelect[m].disabled = false;
     }
 
-    window.load(window.renderPins, window.errorHandler);
+    window.load('https://js.dump.academy/keksobooking/data', 'GET', window.renderPins, window.errorHandler);
 
     isPageActive = true;
   };
