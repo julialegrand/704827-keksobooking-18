@@ -81,7 +81,7 @@
       adFormSelect[m].disabled = false;
     }
 
-    window.load('https://js.dump.academy/keksobooking/data', 'GET', window.renderPins, window.errorHandler);
+    window.backend.load('https://js.dump.academy/keksobooking/data', 'GET', window.renderPins, window.backend.errorHandler);
 
     isPageActive = true;
   };
