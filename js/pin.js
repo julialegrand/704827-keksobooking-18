@@ -2,7 +2,7 @@
 
 
 (function () {
-  window.renderPins = function (ads) {
+  var renderPins = function (ads) {
     var newElement = document.querySelector('.map__pins');
     var shablonTemplate = document
       .querySelector('#pin')
@@ -15,14 +15,14 @@
       element.querySelector('img').src = param.author.avatar;
       element.querySelector('img').alt = param.offer.title;
 
-      element.addEventListener('keydown', window.closeEl);
+      element.addEventListener('keydown', window.map.closeEl);
 
       element.addEventListener('click', function () {
-        window.closeCard();
-        window.renderCard(param);
+        window.map.closeCard();
+        window.card.renderCard(param);
         element.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === window.ENTER_KEYCODE) {
-            window.renderCard(param);
+          if (evt.keyCode === window.util.ENTER_KEYCODE) {
+            window.card.renderCard(param);
           }
         });
       });
@@ -34,6 +34,9 @@
       fragment.appendChild(renderPin(ads[i]));
     }
     newElement.appendChild(fragment);
+  };
+  window.pin = {
+    renderPins: renderPins
   };
 
 })();
