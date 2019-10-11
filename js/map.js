@@ -14,40 +14,32 @@
   var addressInput = adForm.querySelector('#address');
   var mapPinsParent = document.querySelector('.map__pins');
 
-  window.closeCard = function () {
+  var closeCard = function () {
     var activeCard = document.querySelector('.map__card');
     if (activeCard) {
       map.removeChild(activeCard);
     }
   };
 
-  window.closeEl = function (evt) {
-    if (evt.keyCode === window.ESC_KEYCODE) {
-      window.closeCard();
+  var closeEl = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      window.map.closeCard();
     }
   };
 
-
-  window.getMapPinMainPassivXY = function () {
+  var getMapPinMainPassivXY = function () {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
     var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight / 2);
     return x + ',' + y;
   };
 
-  window.getMapPinMainActiveXY = function () {
+  var getMapPinMainActiveXY = function () {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
     var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight);
     return x + ',' + y;
   };
 
-  // Вернуть страницу в исходное состояние.
-  // Блок с картой .map содержит класс map--faded;
-  // Единственное доступное действие в неактивном состоянии — перемещение метки .map__pin--main,
-  // являющейся контролом указания адреса объявления. Первое взаимодействие
-  // с меткой (mousedown) переводит страницу в активное состояние.
-
-
-  window.setPagePassive = function () {
+  var setPagePassive = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     for (var v = 0; v < adFormInput.length; v++) {
@@ -57,17 +49,17 @@
     for (var m = 0; m < adFormSelect.length; m++) {
       adFormSelect[m].disabled = true;
     }
-    addressInput.value = window.getMapPinMainPassivXY();
+    addressInput.value = window.map.getMapPinMainPassivXY();
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < mapPins.length; i++) {
       mapPinsParent.removeChild(mapPins[i]);
     }
-    window.closeCard();
+    window.map.closeCard();
     mapPinMain.style = mapPinMainStyle;
     isPageActive = false;
   };
 
-  window.setPageActive = function () {
+  var setPageActive = function () {
     if (isPageActive) {
       return;
     }
@@ -81,29 +73,30 @@
       adFormSelect[m].disabled = false;
     }
 
-    window.backend.load('https://js.dump.academy/keksobooking/data', 'GET', window.renderPins, window.backend.errorHandler);
+    window.backend.xhrHandler('https://js.dump.academy/keksobooking/data', 'GET', window.pin.renderPins, window.backend.errorHandler);
 
     isPageActive = true;
   };
 
-  window.setPagePassive();
+  window.map = {
+    closeCard: closeCard,
+    closeEl: closeEl,
+    getMapPinMainPassivXY: getMapPinMainPassivXY,
+    getMapPinMainActiveXY: getMapPinMainActiveXY,
+    setPagePassive: setPagePassive,
+    setPageActive: setPageActive
+  };
+  window.map.setPagePassive();
 
-  // Добавьте обработчик события mousedown на элемент .map__pin--main
-  // Обработчик события mousedown должен вызывать функцию, которая будет отменять изменения DOM-элементов,
-  // описанные в пункте «Неактивное состояние» технического задания.
 
   mapPinMain.addEventListener('mousedown', function () {
-    window.setPageActive();
-    addressInput.value = window.getMapPinMainActiveXY();
+    window.map.setPageActive();
+    addressInput.value = window.map.getMapPinMainActiveXY();
   });
 
-  // Установить обработчик keydown для метки.
-  // При наступлении события мы должны проверить нажатую клавишу и
-  //  если пользователь нажал Enter — перевести страницу в активный режим.
-
   mapPinMain.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.ENTER_KEYCODE) {
-      window.setPageActive();
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      window.map.setPageActive();
     }
   });
 

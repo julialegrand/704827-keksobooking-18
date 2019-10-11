@@ -65,7 +65,7 @@
         mapPinMain.addEventListener('click', onClickPreventDefault);
       }
 
-      addressInput.value = window.getMapPinMainActiveXY();
+      addressInput.value = window.map.getMapPinMainActiveXY();
 
     };
 

@@ -2,7 +2,7 @@
 
 
 (function () {
-  window.renderCard = function (param) {
+  var renderCard = function (param) {
     var map = document.querySelector('.map');
     var shablonCard = document
       .querySelector('#card')
@@ -78,13 +78,16 @@
     element.querySelector('.popup__avatar').src = param.author.avatar;
     var popupCloseEl = element.querySelector('.popup__close');
     popupCloseEl.addEventListener('click', function () {
-      window.closeCard();
+      window.map.closeCard();
     });
     var newCart = map.querySelector('.map__filters-container');
 
     var newFragment = document.createDocumentFragment();
     newFragment.appendChild(element);
     map.insertBefore(newFragment, newCart);
+  };
+  window.card = {
+    renderCard: renderCard
   };
 })();
 

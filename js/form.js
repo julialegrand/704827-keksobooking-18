@@ -55,6 +55,6 @@
     selectType();
   });
   adFormReset.addEventListener('click', function () {
-    window.setPagePassive();
+    window.map.setPagePassive();
   });
 })();
