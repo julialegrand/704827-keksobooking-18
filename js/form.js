@@ -54,6 +54,27 @@
   formSubmitButton.addEventListener('click', function () {
     selectType();
   });
+  var formSuccessHandler = function () {
+    window.map.setPagePassive();
+    var main = document.querySelector('main');
+    var shablonTemplate = document
+      .querySelector('#success')
+      .content.querySelector('.success');
+    var element = shablonTemplate.cloneNode(true);
+    main.appendChild(element);
+    document.addEventListener('click', function () {
+      main.removeChild(element);
+    });
+    document.addEventListener('keydown', function (docEvent) {
+      if (docEvent.keyCode === window.util.ESC_KEYCODE) {
+        main.removeChild(element);
+      }
+    });
+  };
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save('https://js.dump.academy/keksobooking', 'POST', new FormData(adForm), formSuccessHandler, window.backend.errorHandler);
+  });
   adFormReset.addEventListener('click', function () {
     window.map.setPagePassive();
   });

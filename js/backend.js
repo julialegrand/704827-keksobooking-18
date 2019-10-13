@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var adForm = document.querySelector('.ad-form');
   var TIME_OUT = 10000;
   var CASE_200 = 200;
   var xhrHandler = function (url, method, formData, onLoad, onError) {
@@ -45,27 +44,6 @@
       }
     });
   };
-
-  adForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    xhrHandler('https://js.dump.academy/keksobooking', 'POST', new FormData(adForm), function () {
-      window.map.setPagePassive();
-      var main = document.querySelector('main');
-      var shablonTemplate = document
-        .querySelector('#success')
-        .content.querySelector('.success');
-      var element = shablonTemplate.cloneNode(true);
-      main.appendChild(element);
-      document.addEventListener('click', function () {
-        main.removeChild(element);
-      });
-      document.addEventListener('keydown', function (docEvent) {
-        if (docEvent.keyCode === window.util.ESC_KEYCODE) {
-          main.removeChild(element);
-        }
-      });
-    }, errorHandler);
-  });
 
   window.backend = {
     load: xhrHandler,
