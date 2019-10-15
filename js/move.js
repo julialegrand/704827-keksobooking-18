@@ -46,7 +46,15 @@
         y: moveEvt.clientY
       };
 
-      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+      var mapPinMainY = mapPinMain.offsetTop - shift.y;
+      if (mapPinMainY < (130 - mapPinMainHeight)) {
+        mapPinMainY = 130 - mapPinMainHeight;
+      }
+      if (mapPinMainY > (630 - mapPinMainHeight)) {
+        mapPinMainY = 630 - mapPinMainHeight;
+      }
+
+      mapPinMain.style.top = mapPinMainY + 'px';
       mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
     };

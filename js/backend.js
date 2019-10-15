@@ -3,7 +3,7 @@
 (function () {
   var TIME_OUT = 10000;
   var CASE_200 = 200;
-  var xhrHandler = function (url, method, onLoad, onError) {
+  var xhrHandler = function (url, method, formData, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -22,7 +22,7 @@
     });
 
     xhr.open(method, url);
-    xhr.send();
+    xhr.send(formData);
   };
   var errorHandler = function (errorMessage) {
     var main = document.querySelector('main');
@@ -32,9 +32,22 @@
     var element = shablonTemplate.cloneNode(true);
     element.querySelector('.error__message').textContent = errorMessage;
     main.appendChild(element);
+    element.querySelector('.error__button').addEventListener('click', function () {
+      main.removeChild(element);
+    });
+    document.addEventListener('click', function () {
+      main.removeChild(element);
+    });
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.ESC_KEYCODE) {
+        main.removeChild(element);
+      }
+    });
   };
+
   window.backend = {
-    xhrHandler: xhrHandler,
+    load: xhrHandler,
+    save: xhrHandler,
     errorHandler: errorHandler
   };
 })();
