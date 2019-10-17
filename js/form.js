@@ -11,84 +11,47 @@
   var timeOut = adForm.querySelector('#timeout');
   var timeIn = adForm.querySelector('#timein');
 
+  var ROOM_CAPACITY = {
+    '1': ['1'],
+    '2': ['2', '1'],
+    '3': ['3', '2', '1'],
+    '0': ['0'],
+  };
+
   timeOut.addEventListener('change', function () {
     timeIn.value = timeOut.value;
   });
   timeIn.addEventListener('change', function () {
     timeOut.value = timeIn.value;
   });
-  function onPriceChange() {
-    var typeValue = typeRent.value;
-    if (typeValue === 'bungalo') {
-      priceNight.placeholder = '0';
-      priceNight.min = '0';
-    } else if (typeValue === 'flat') {
-      priceNight.placeholder = '1000';
-      priceNight.min = '1000';
-    } else if (typeValue === 'house') {
-      priceNight.placeholder = '5000';
-      priceNight.min = '5000';
-    } else if (typeValue === 'palace') {
-      priceNight.placeholder = '10000';
-      priceNight.min = '10000';
+
+  var onPriceChange = function () {
+    var minPrice = window.card.types[typeRent.value].min;
+    priceNight.placeholder = minPrice;
+    priceNight.min = minPrice;
+    priceNight.value = minPrice;
+  };
+
+  var onRoomNumberSelect = function () {
+    if (capacitySelect.options.length > 0) {
+      Array.from(capacitySelect).forEach(function (option) {
+        option.selected = (ROOM_CAPACITY[roomNumberSelect.value][0] === option.value) ? true : false;
+        option.hidden = (ROOM_CAPACITY[roomNumberSelect.value].indexOf(option.value) >= 0) ? false : true;
+      });
     }
-  }
+  };
+
+  onRoomNumberSelect();
+  onPriceChange();
+
   typeRent.addEventListener('change', onPriceChange);
-  roomNumberSelect.addEventListener('change', function () {
-    capacitySelect.value = roomNumberSelect.value;
-  });
-  capacitySelect.addEventListener('change', function () {
-    roomNumberSelect.value = capacitySelect.value;
-  });
+  roomNumberSelect.addEventListener('change', onRoomNumberSelect);
 
-  function onFormInput() {
-    var roomNumber = roomNumberSelect.value;
-    var bedNumber = capacitySelect.value;
-    if (roomNumber === '0') {
-      capacitySelect.setCustomValidity('Не для гостей');
-    } else if (bedNumber > roomNumber) {
-      capacitySelect.setCustomValidity('Колличество комнат должно быть больше');
-    } else {
-      capacitySelect.setCustomValidity('');
-    }
-  }
-  capacitySelect.addEventListener('change', onFormInput);
-  roomNumberSelect.addEventListener('change', onFormInput);
-
-  function selectType() {
-    var timeOutValue = timeOut.value;
-    var timeInValue = timeIn.value;
-    var typeValue = typeRent.value;
-    var priceValue = priceNight.value;
-    if (typeValue === 'bungalo' && priceValue < 0) {
-      priceNight.setCustomValidity('Цена должна быть выше');
-    } else if (typeValue === 'flat' && priceValue < 1000) {
-      priceNight.setCustomValidity('Цена должна быть выше');
-    } else if (typeValue === 'house' && priceValue < 5000) {
-      priceNight.setCustomValidity('Цена должна быть выше');
-    } else if (typeValue === 'palace' && priceValue < 10000) {
-      priceNight.setCustomValidity('Цена должна быть выше');
-    } else {
-      priceNight.setCustomValidity('');
-    }
-    if (timeOutValue !== timeInValue) {
-      timeOut.setCustomValidity('Укажите другое время');
-    } else {
-      timeOut.setCustomValidity('');
-    }
-  }
-
-  var formSubmitButton = adForm.querySelector('.ad-form__submit');
-  formSubmitButton.addEventListener('click', function () {
-    selectType();
-  });
   var formSuccessHandler = function () {
     window.map.setPagePassive();
     var main = document.querySelector('main');
-    var shablonTemplate = document
-      .querySelector('#success')
-      .content.querySelector('.success');
-    var element = shablonTemplate.cloneNode(true);
+    var templateSuccess = document.querySelector('#success').content.querySelector('.success');
+    var element = templateSuccess.cloneNode(true);
     main.appendChild(element);
     document.addEventListener('click', function () {
       main.removeChild(element);
@@ -101,7 +64,7 @@
   };
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save('https://js.dump.academy/keksobooking', 'POST', new FormData(adForm), formSuccessHandler, window.backend.errorHandler);
+    window.backend.save('https://js.dump.academy/keksobooking', 'POST', formSuccessHandler, window.backend.errorHandler, new FormData(adForm));
   });
   adFormReset.addEventListener('click', function () {
     window.map.setPagePassive();
