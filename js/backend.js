@@ -3,7 +3,7 @@
 (function () {
   var TIME_OUT = 10000;
   var CASE_200 = 200;
-  var xhrHandler = function (url, method, formData, onLoad, onError) {
+  var xhrHandler = function (url, method, onLoad, onError, formData) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
