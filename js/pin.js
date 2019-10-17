@@ -30,6 +30,7 @@
     var mapOverlay = mapPinsContainer.querySelector('.map__overlay');
     var mapMainPin = mapPinsContainer.querySelector('.map__pin--main');
     mapPinsContainer.innerHTML = '';
+    window.map.removeCard();
     var takeNumber = items.length > 5 ? 5 : items.length;
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < takeNumber; i++) {
