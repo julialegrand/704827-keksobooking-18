@@ -35,8 +35,8 @@
   var onRoomNumberSelect = function () {
     if (capacitySelect.options.length > 0) {
       Array.from(capacitySelect).forEach(function (option) {
-        option.selected = (ROOM_CAPACITY[roomNumberSelect.value][0] === option.value) ? true : false;
-        option.hidden = (ROOM_CAPACITY[roomNumberSelect.value].indexOf(option.value) >= 0) ? false : true;
+        option.selected = (ROOM_CAPACITY[roomNumberSelect.value][0] === option.value);
+        option.hidden = !(ROOM_CAPACITY[roomNumberSelect.value].indexOf(option.value) >= 0);
       });
     }
   };

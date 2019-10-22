@@ -26,15 +26,9 @@
     }
   };
 
-  var getPinMainPassivXY = function () {
+  var getPinMainXY = function (isActive) {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
-    var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight / 2);
-    return x + ',' + y;
-  };
-
-  var getPinMainActiveXY = function () {
-    var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
-    var y = Math.floor(mapPinMain.offsetTop + mapPinMainHeight);
+    var y = Math.floor(mapPinMain.offsetTop + isActive ? mapPinMainHeight : mapPinMainHeight / 2);
     return x + ',' + y;
   };
 
@@ -47,9 +41,9 @@
   var setPagePassive = function () {
     container.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
-
+    adForm.reset();
     toggleFieldset();
-    addressInput.value = getPinMainPassivXY();
+    addressInput.value = getPinMainXY(false);
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     mapPins.forEach(function (item) {
       mapPinsParent.removeChild(item);
@@ -79,7 +73,7 @@
 
   var onMainPinMouseDownn = function () {
     setPageActive();
-    addressInput.value = getPinMainActiveXY();
+    addressInput.value = getPinMainXY(true);
 
     mapPinMain.removeEventListener('mousedown', onMainPinMouseDownn);
     mapPinMain.removeEventListener('keydown', onMainPinKeyDown);
@@ -100,8 +94,7 @@
     container: container,
     removeCard: removeCard,
     closeCard: closeCard,
-    getPinMainPassivXY: getPinMainPassivXY,
-    getPinMainActiveXY: getPinMainActiveXY,
+    getPinMainXY: getPinMainXY,
     setPagePassive: setPagePassive,
     setPageActive: setPageActive
   };

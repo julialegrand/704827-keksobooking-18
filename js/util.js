@@ -5,7 +5,7 @@
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
 
-  var DEBOUNCE_INTERVAL = 300;
+  var DEBOUNCE_INTERVAL = 500;
 
   var debounce = function (cb) {
     var lastTimeout = null;
