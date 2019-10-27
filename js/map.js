@@ -28,7 +28,7 @@
 
   var getPinMainXY = function (isActive) {
     var x = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2);
-    var y = Math.floor(mapPinMain.offsetTop + isActive ? mapPinMainHeight : mapPinMainHeight / 2);
+    var y = Math.floor(mapPinMain.offsetTop + (isActive ? mapPinMainHeight : mapPinMainHeight / 2));
     return x + ',' + y;
   };
 
@@ -39,9 +39,11 @@
   };
 
   var setPagePassive = function () {
+    var mapFilters = document.querySelector('.map__filters');
     container.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     adForm.reset();
+    mapFilters.reset();
     toggleFieldset();
     addressInput.value = getPinMainXY(false);
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
