@@ -21,9 +21,25 @@
     };
   };
 
+  var numIncline = function (n, str1, str2, str3) {
+    var rest = n % 10;
+    var str;
+    if (rest === 0 || (rest >= 5 && rest <= 9) || (n >= 11 && n <= 14)) {
+      str = str1;
+    }
+    if (rest === 1) {
+      str = str2;
+    }
+    if (rest >= 2 && rest <= 4) {
+      str = str3;
+    }
+    return n + ' ' + str;
+  };
+
   window.util = {
-    debounce: debounce,
     ENTER_KEYCODE: ENTER_KEYCODE,
-    ESC_KEYCODE: ESC_KEYCODE
+    ESC_KEYCODE: ESC_KEYCODE,
+    debounce: debounce,
+    numIncline: numIncline
   };
 })();
