@@ -38,22 +38,22 @@
     } else {
       element.querySelector('.popup__text--address').classList.add('hidden');
     }
-    if (param.offer.price + '₽/ночь') {
+    if (param.offer.price) {
       element.querySelector('.popup__text--price').textContent = param.offer.price + '₽/ночь';
     } else {
       element.querySelector('.popup__text--price').classList.add('hidden');
     }
-    if (types[param.offer.type].ru) {
+    if (param.offer.type) {
       element.querySelector('.popup__type ').textContent = types[param.offer.type].ru;
     } else {
       element.querySelector('.popup__type ').classList.add('hidden');
     }
-    if (window.util.numIncline(param.offer.rooms, 'комнат', 'комната', 'комнаты') + ' ' + 'для' + ' ' + param.offer.guests + ' ' + 'гостей.') {
+    if (param.offer.rooms && param.offer.guests) {
       element.querySelector('.popup__text--capacity').textContent = window.util.numIncline(param.offer.rooms, 'комнат', 'комната', 'комнаты') + ' ' + 'для' + ' ' + param.offer.guests + ' ' + 'гостей.';
     } else {
       element.querySelector('.popup__text--capacity').classList.add('hidden');
     }
-    if ('Заезд после' + param.offer.checkin + ',' + '' + 'выезд до' + param.offer.checkout + '.') {
+    if (param.offer.checkin && param.offer.checkout) {
       element.querySelector('.popup__text--time').textContent = 'Заезд после' + param.offer.checkin + ',' + '' + 'выезд до' + param.offer.checkout + '.';
     } else {
       element.querySelector('.popup__text--time').classList.add('hidden');

@@ -21,17 +21,17 @@
     };
   };
 
-  var numIncline = function (n, str1, str2, str3) {
+  var numIncline = function (n, string1, string2, string3) {
     var rest = n % 10;
     var str;
     if (rest === 0 || (rest >= 5 && rest <= 9) || (n >= 11 && n <= 14)) {
-      str = str1;
+      str = string1;
     }
     if (rest === 1) {
-      str = str2;
+      str = string2;
     }
     if (rest >= 2 && rest <= 4) {
-      str = str3;
+      str = string3;
     }
     return n + ' ' + str;
   };

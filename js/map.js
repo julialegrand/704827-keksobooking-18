@@ -59,7 +59,7 @@
   };
   var successHandler = function (data) {
     window.pin.ads = data;
-    window.filter.update();
+    window.filter.onFormChange();
   };
   var setPageActive = function () {
     container.classList.remove('map--faded');
