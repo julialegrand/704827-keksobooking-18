@@ -531,7 +531,7 @@ fieldset {
           align-items: center;
 
   margin-right: 10px;
-  padding: 0 15px;
+  padding: 0 5px;
 
   width: 70px;
   height: 70px;
@@ -541,7 +541,25 @@ fieldset {
   border-radius: 5px;
   background-color: #dadada;
 }
+.ad-form__photo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 
+  margin-right: 10px;
+  padding: 0 5px;
+
+  width: 70px;
+  height: 70px;
+
+  text-align: center;
+
+  border-radius: 5px;
+  background-color: #dadada;
+}
 .ad-form__field {
   display: -webkit-box;
   display: -ms-flexbox;

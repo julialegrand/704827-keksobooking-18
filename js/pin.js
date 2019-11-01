@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var PIN_COUNT = 5;
   var ads = [];
 
   var renderPin = function (param) {
@@ -30,9 +31,10 @@
     var mapOverlay = mapPinsContainer.querySelector('.map__overlay');
     var mapMainPin = mapPinsContainer.querySelector('.map__pin--main');
     mapPinsContainer.innerHTML = '';
-    var takeNumber = items.length > 5 ? 5 : items.length;
+    window.map.removeCard();
+    var number = items.length > PIN_COUNT ? PIN_COUNT : items.length;
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < takeNumber; i++) {
+    for (var i = 0; i < number; i++) {
       fragment.appendChild(renderPin(items[i]));
     }
     mapPinsContainer.appendChild(fragment);

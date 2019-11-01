@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MIN_Y = 130;
+  var MAX_Y = 630;
   var doc = document.documentElement;
   var mapPinMain = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
@@ -10,8 +12,6 @@
   var mapHeight = window.map.container.offsetHeight;
   var mapWidth = window.map.container.offsetWidth;
   var mapLeft = window.map.container.offsetLeft;
-  var MIN_Y = 130;
-  var MAX_Y = 630;
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -73,7 +73,7 @@
         mapPinMain.addEventListener('click', onClickPreventDefault);
       }
 
-      addressInput.value = window.map.getPinMainActiveXY();
+      addressInput.value = window.map.getPinMainXY(true);
 
     };
 
