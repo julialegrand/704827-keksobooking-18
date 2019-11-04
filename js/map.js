@@ -9,6 +9,9 @@
   var mapPinMainHeight = mapPinMain.offsetHeight;
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
+  var avatarPreview = document.querySelector('.ad-form-header__preview img');
+  var homePreview = document.querySelector('.ad-form__photo');
+  var defaultAvatarImage = avatarPreview.src;
 
   var addressInput = adForm.querySelector('#address');
   var mapPinsParent = document.querySelector('.map__pins');
@@ -45,6 +48,8 @@
     adForm.reset();
     mapFilters.reset();
     toggleFieldset();
+    avatarPreview.src = defaultAvatarImage;
+    homePreview.innerHTML = '';
     addressInput.value = getPinMainXY(false);
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     mapPins.forEach(function (item) {
@@ -57,7 +62,7 @@
     mapPinMain.addEventListener('mousedown', onMainPinMouseDownn);
     mapPinMain.addEventListener('keydown', onMainPinKeyDown);
   };
-  var successHandler = function (data) {
+  var onDataLoad = function (data) {
     window.pin.ads = data;
     window.filter.onFormChange();
   };
@@ -66,7 +71,7 @@
     adForm.classList.remove('ad-form--disabled');
 
     toggleFieldset();
-    window.backend.load('https://js.dump.academy/keksobooking/data', 'GET', successHandler, window.backend.errorHandler);
+    window.backend.load('https://js.dump.academy/keksobooking/data', 'GET', onDataLoad, window.backend.onFormError);
 
   };
 

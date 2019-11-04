@@ -24,7 +24,7 @@
     xhr.open(method, url);
     xhr.send(formData);
   };
-  var errorHandler = function (errorMessage) {
+  var onFormError = function (errorMessage) {
     var main = document.querySelector('main');
     var shablonTemplate = document
       .querySelector('#error')
@@ -48,6 +48,6 @@
   window.backend = {
     load: xhrHandler,
     save: xhrHandler,
-    errorHandler: errorHandler
+    onFormError: onFormError
   };
 })();

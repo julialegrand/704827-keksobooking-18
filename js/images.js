@@ -5,6 +5,8 @@
   var preview = document.querySelector('.ad-form-header__preview img');
   var fileChooserHome = document.querySelector('.ad-form__upload input[type=file]');
   var previewHome = document.querySelector('.ad-form__photo');
+  var defaultAvatar = fileChooserAvatar.src;
+  var defaultHome = fileChooserHome.src;
 
   var isImage = function (file) {
     var fileName = file.name.toLowerCase();
@@ -14,7 +16,7 @@
     return matches;
   };
 
-  var loadImage = function (file, load) {
+  var onImageLoad = function (file, load) {
     file.addEventListener('change', function () {
       var fileImage = file.files[0];
       if (isImage(fileImage)) {
@@ -26,9 +28,9 @@
       }
     });
   };
-  loadImage(fileChooserAvatar, preview);
+  onImageLoad(fileChooserAvatar, preview);
 
-  var loadImageHome = function (file, loadFoto) {
+  var onImageHomeLoad = function (file, loadFoto) {
     file.addEventListener('change', function () {
       var fileImage = file.files[0];
       if (isImage(fileImage)) {
@@ -44,5 +46,9 @@
       }
     });
   };
-  loadImageHome(fileChooserHome, previewHome);
+  onImageHomeLoad(fileChooserHome, previewHome);
+  window.images = {
+    defaultAvatar: defaultAvatar,
+    defaultHome: defaultHome
+  };
 })();
