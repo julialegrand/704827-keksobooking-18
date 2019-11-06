@@ -29,7 +29,6 @@
     var minPrice = window.card.types[typeRent.value].min;
     priceNight.placeholder = minPrice;
     priceNight.min = minPrice;
-    priceNight.value = minPrice;
   };
 
   var onRoomNumberSelect = function () {
@@ -47,7 +46,7 @@
   typeRent.addEventListener('change', onPriceChange);
   roomNumberSelect.addEventListener('change', onRoomNumberSelect);
 
-  var formSuccessHandler = function () {
+  var onFormSuccess = function () {
     window.map.setPagePassive();
     var main = document.querySelector('main');
     var templateSuccess = document.querySelector('#success').content.querySelector('.success');
@@ -64,7 +63,7 @@
   };
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save('https://js.dump.academy/keksobooking', 'POST', formSuccessHandler, window.backend.errorHandler, new FormData(adForm));
+    window.backend.save('https://js.dump.academy/keksobooking', 'POST', onFormSuccess, window.backend.onFormError, new FormData(adForm));
   });
   adFormReset.addEventListener('click', function () {
     window.map.setPagePassive();
