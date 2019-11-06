@@ -29,7 +29,6 @@
     var minPrice = window.card.types[typeRent.value].min;
     priceNight.placeholder = minPrice;
     priceNight.min = minPrice;
-    priceNight.value = minPrice;
   };
 
   var onRoomNumberSelect = function () {
