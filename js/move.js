@@ -27,12 +27,11 @@
       moveEvt.preventDefault();
       dragged = true;
       var scrollTop = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-
-      if ((moveEvt.clientX < mapLeft + mapPinMainWidth) || (moveEvt.clientY < mapPinMainHeight)) {
+      if (moveEvt.clientX < mapLeft + (mapPinMainWidth / 2)) {
         return;
       }
 
-      if ((moveEvt.clientX > (mapWidth + mapLeft - mapPinMainWidth)) || ((moveEvt.clientY + scrollTop) > (mapHeight - mapPinMainHeight))) {
+      if ((moveEvt.clientX > (mapWidth + mapLeft - (mapPinMainWidth / 2))) || ((moveEvt.clientY + scrollTop) > (mapHeight - mapPinMainHeight))) {
         return;
       }
 
