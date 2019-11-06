@@ -47,8 +47,7 @@
   };
 
   var onFormChange = window.util.debounce(function () {
-    var filterElements = [];
-    filterElements = Array.from(mapFilters.children);
+    var filterElements = Array.from(mapFilters.children);
     window.pin.render(getFilterData(window.pin.ads, filterElements));
   });
   mapFilters.addEventListener('change', onFormChange);

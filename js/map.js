@@ -50,7 +50,7 @@
     toggleFieldset();
     avatarPreview.src = defaultAvatarImage;
     homePreview.innerHTML = '';
-    addressInput.value = getPinMainXY(false);
+
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     mapPins.forEach(function (item) {
       mapPinsParent.removeChild(item);
@@ -58,7 +58,7 @@
 
     removeCard();
     mapPinMain.style = mapPinMainStyle;
-
+    addressInput.value = getPinMainXY(false);
     mapPinMain.addEventListener('mousedown', onMainPinMouseDownn);
     mapPinMain.addEventListener('keydown', onMainPinKeyDown);
   };
