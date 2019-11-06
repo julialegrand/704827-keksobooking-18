@@ -2,6 +2,12 @@
 
 
 (function () {
+  var ROOM_CAPACITY = {
+    '1': ['1'],
+    '2': ['2', '1'],
+    '3': ['3', '2', '1'],
+    '0': ['0'],
+  };
   var adForm = document.querySelector('.ad-form');
   var typeRent = adForm.querySelector('#type');
   var priceNight = adForm.querySelector('#price');
@@ -10,13 +16,6 @@
   var adFormReset = adForm.querySelector('.ad-form__reset');
   var timeOut = adForm.querySelector('#timeout');
   var timeIn = adForm.querySelector('#timein');
-
-  var ROOM_CAPACITY = {
-    '1': ['1'],
-    '2': ['2', '1'],
-    '3': ['3', '2', '1'],
-    '0': ['0'],
-  };
 
   timeOut.addEventListener('change', function () {
     timeIn.value = timeOut.value;
